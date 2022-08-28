@@ -11,45 +11,63 @@ function Header() {
           </Logo>
 
           <MenuBar>
-            <div className="home">
+            <div className="menu">
               <div className="logo-div">
                 <img src="/images/home-icon.svg" />
               </div>
-              HOME
+              <div className="option-div">
+                HOME
+                <div className="bar"></div>
+              </div>
             </div>
-            <div className="search">
+            <div className="menu">
               <div className="logo-div">
                 <img src="/images/search-icon.svg" />
               </div>
-              SEARCH
+              <div className="option-div">
+                SEARCH
+                <div className="bar"></div>
+              </div>
             </div>
 
-            <div className="watchlist">
+            <div className="menu">
               <div className="logo-div">
                 <img src="/images/watchlist-icon.svg" />
               </div>
-              WATCHLIST
+              <div className="option-div">
+                WATCHLIST
+                <div className="bar"></div>
+              </div>
             </div>
 
-            <div className="originals">
+            <div className="menu">
               <div className="logo-div">
                 <img src="/images/original-icon.svg" />
               </div>
-              ORIGINALS
+              <div className="option-div">
+                ORIGINALS
+                <div className="bar"></div>
+              </div>
             </div>
 
-            <div className="movies">
+            <div className="menu">
               <div className="logo-div">
                 <img src="/images/movie-icon.svg" />
               </div>
-              MOVIES
+              <div className="option-div">
+                MOVIES
+                <div className="bar"></div>
+              </div>
             </div>
 
-            <div className="series">
+            <div className="menu">
               <div className="logo-div">
                 <img src="/images/series-icon.svg" />
               </div>
-              SERIES
+              <div className="option-div">
+                SERIES
+                <div className="bar"></div>
+              </div>
             </div>
 
           </MenuBar>
@@ -93,24 +111,44 @@ const MenuBar=styled.div`
   display: flex;
   align-items: center;
 
-  .home,
-  .search,
-  .watchlist,
-  .originals,
-  .movies,
-  .series {
+  .menu {
     flex:1;
     height: 70px;
+
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: Inter;
+
+    letter-spacing: 1.7px;
     font-weight: 500;
     font-size: 13.5px;
     color: white;
     cursor: pointer;
     display: flex;
-    justify-content: cente;
+    justify-content: center;
+
+    .option-div {
+      position: relative;
+    }
+
+    .option-div .bar {
+      position: absolute;
+      left:0px;
+      right:0px;
+      bottom: -7.5px;
+      background-color: rgba(53, 54, 50, 0.64);
+      width: 97.5%;
+      height: 3.8px;
+      border-radius: 3px;
+      opacity: 0;
+      z-index: 1000;
+      transition: opacity 0.35s;
+    }
+
+    .option-div:hover .bar {
+      opacity: 1;
+    }
 
     .logo-div {
       display: flex;
@@ -119,6 +157,8 @@ const MenuBar=styled.div`
       margin-right: 7px;
       padding-bottom: 2px;
     }
+
+
   }
 `
 
