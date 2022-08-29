@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import ImgSlider from './ImgSlider'
+import Viewers from './Viewers'
 
 function Home() {
     return (
         <Container>
           <ImgSlider />
+          <Viewers />
+
           <BgImg>
 
           </BgImg>
@@ -20,11 +23,12 @@ const Container=styled.main`
   padding-top: 0;
   padding-bottom: 0;
   paddin-left: calc(3.5vw + 5px);
-  position: relative;
   color: white;
-  position: relative;
+  position:relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
   overflow-x: hidden;
 `
 const BgImg=styled.div`
@@ -39,5 +43,4 @@ const BgImg=styled.div`
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
-
 `

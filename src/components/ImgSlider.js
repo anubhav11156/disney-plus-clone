@@ -30,8 +30,8 @@ export default ImgSlider
 
 const Carousel=styled(Slider)`
   margin-top: 20px;
-  width: 90vw;
   height:368px;
+  width: 95vw;
 
   ul li button {
     &:before {
@@ -59,7 +59,7 @@ const Wrap = styled.div`
     border: 4px solid transparent;
     width: 100%;
     height: 100%;
-    border-radius: 5px;
+    border-radius: 7px;
     box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
     transition: border 0.27s;
