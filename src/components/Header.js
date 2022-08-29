@@ -91,6 +91,7 @@ const Nav=styled.div`
   background-color: rgb(9,11,19);
   display: flex;
   align-items: center;
+  overflow-x:hidden;
 `
 const Logo=styled.div`
   width: 140px;
@@ -143,7 +144,7 @@ const MenuBar=styled.div`
       border-radius: 3px;
       opacity: 0;
       z-index: 1000;
-      transition: opacity 0.35s;
+      transition: opacity 0.3s;
     }
 
     .option-div:hover .bar {
