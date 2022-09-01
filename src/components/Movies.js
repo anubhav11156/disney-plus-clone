@@ -1,52 +1,87 @@
-import React from 'react'
+import React, { useEffect, useState }from 'react'
 import styled from 'styled-components'
 import RecommendedMovie from './RecommendedMovie'
+import { selectMovies } from '../features/movie/movieSlice'
+import { useSelector } from 'react-redux'
+
 
 function Movies() {
+
+  const [movies, setMovies] = useState([]);
+  useEffect( ()=> {
+    async function fetchApi() {
+      const response = await fetch('https://api.themoviedb.org/3/trending/all/day?api_key=e8df460529a8f20593a1db1ae105c5ca');
+      const dataRecieved = await response.json();
+      setMovies(dataRecieved.results);
+    }
+    fetchApi();
+    console.log(movies[0]);
+  },[])
+
+  const getImageURL = (path)=> {
+    return `http://image.tmdb.org/t/p/w500${path}`
+  }
+
+  const cards = movies.map((card) => {
+    let name;
+    if( 'original_title' in card ){
+      name = card.original_title;
+    }
+    else if ( 'original_name' in card ) {
+      name = card.original_name;
+    }
+    const rating = card.vote_average.toFixed(2);
     return (
-        <Container>
-          <h4>Recommended For You</h4>
-          <div className="movie-card-div">
-            <RecommendedMovie />
-            <RecommendedMovie />
-            <RecommendedMovie />
-            <RecommendedMovie />
-          </div>
-          <h4>New to Disney +</h4>
-          <div className="movie-card-div">
-            new
-          </div>
-          <h4>Originals</h4>
-          <div className="movie-card-div">
-            originals
-          </div>
-        </Container>
+      <RecommendedMovie
+        imageURL={getImageURL(card.poster_path)}
+        name={name}
+        rating={rating}
+      />
     )
+  })
+
+  return (
+      <Container>
+        <h4>Trending</h4>
+        <GridWapper>
+          <div className="movie-card-div">
+            {cards}
+          </div>
+        </GridWapper>
+
+      </Container>
+  )
 }
 
 export default Movies
 
 const Container=styled.div`
-  margin-top: 35px;
+  margin-top: 55px;
   flex:1;
   width: 95vw;
-  display: flex;
-  flex-direction: column;
 
   h4 {
     padding-top: 15px;
     padding-bottom: 30px;
-    display: block;
     margin:0;
+    margin-left: 5px;
     font-family: Inter;
     font-size: 20px;
     letter-spacing: 0.15px;
   }
 
   .movie-card-div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 210px;
+    display: grid;
+    grid-template-columns: 375px 375px 375px 375px;
+    grid-column-gap: 91px;
+    align-content: space-between;
+    grid-row-gap: 70px;
   }
+`
+
+const GridWapper=styled.div`
+  width: 100%;
+  padding-top: 12px;
+  display: flex;
+  justify-content: center;
 `

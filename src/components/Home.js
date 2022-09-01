@@ -5,15 +5,14 @@ import Viewers from './Viewers'
 import Movies from './Movies'
 
 function Home() {
-    return (
-        <Container>
-          <ImgSlider />
-          <Viewers />
-          <Movies />
-          <BgImg>
-
-          </BgImg>
-        </Container>
+  return (
+      <Container>
+        <ImgSlider />
+        <Viewers />
+        <Movies />
+        <BgImg>
+        </BgImg>
+      </Container>
     )
 }
 
@@ -40,7 +39,7 @@ const BgImg=styled.div`
   right:0;
   z-index: -1;
   background: url("/images/home-background.png");
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
