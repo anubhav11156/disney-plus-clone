@@ -15,7 +15,6 @@ function Movies() {
       setMovies(dataRecieved.results);
     }
     fetchApi();
-    console.log(movies[0]);
   },[])
 
   const getImageURL = (path)=> {
@@ -31,11 +30,21 @@ function Movies() {
       name = card.original_name;
     }
     const rating = card.vote_average.toFixed(2);
+    const description = card.overview;
+    const mediaType = card.media_type;
+    const year = card.release_date;
+    const id=card.id;
+    const image = getImageURL(card.poster_path)
+
     return (
       <RecommendedMovie
         imageURL={getImageURL(card.poster_path)}
         name={name}
         rating={rating}
+        description={description}
+        mediaType={mediaType}
+        year={year}
+        id={id}
       />
     )
   })

@@ -1,14 +1,34 @@
 import React, {useState } from 'react'
 import styled from 'styled-components'
 import Fade from 'react-reveal/Fade';
+import { Link } from 'react-router-dom'
 
 function RecommendedMovie(props) {
   const [isHovering, setIsHovering] = useState(false);
 
+
   const mouseOverHandle = () => setIsHovering(true);
   const mouseOutHandle = () => setIsHovering(false);
 
+  const overview=props.description;
+  const year=props.year;
+  const mediaType=props.mediaType;
+  const image=props.imageURL;
+  const id=props.id;
+  const name=props.name;
+
+  const stateToPass = {
+    overview:overview,
+    year:year,
+    mediaType:mediaType,
+    poster:image,
+    name:name,
+    id:id
+  }
+
     return (
+      <Link to={`/detail/${id}`} state={stateToPass}>
+
         <Container onMouseOver={mouseOverHandle} onMouseOut={mouseOutHandle}>
           <img src={props.imageURL} />
           <div className="beautification">
@@ -37,6 +57,9 @@ function RecommendedMovie(props) {
           )}
 
         </Container>
+
+      </Link>
+
     )
 }
 
@@ -104,6 +127,7 @@ const Wrapper=styled.div`
     font-family: Inter;
     font-weight: 500;
     font-size: 19px;
+    white-space: pre-line;
 
     span {
       margin-left: 3px;

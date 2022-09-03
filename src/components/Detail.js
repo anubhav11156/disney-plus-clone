@@ -1,48 +1,109 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useLocation } from 'react-router-dom'
+import DetailWrapper from './DetailWrapper'
+import Trailer from './Trailer'
 
 function Detail() {
+
+  const {state} = useLocation();
+  const year = state.year;
+  const image = state.poster;
+  const overview = state.overview;
+  const mediaType = state.mediaType;
+  const name=state.name;
+  const id=state.id;
+
+  const [trailer, setTrailer] = useState([])
+  const [playTrailer, setPlayTrailer] = useState(true);
+  const [trailerButtonText, setTrailerButtonText] = useState("TRAILER")
+
+
+  useEffect(()=>{
+    async function fetchTrailer() {
+        const response = await fetch(`https://api.themoviedb.org/3/${mediaType}/${id}/videos?api_key=e8df460529a8f20593a1db1ae105c5ca&language=en-US`)
+        const dataRecieved = await response.json();
+        setTrailer(dataRecieved.results);
+    }
+    fetchTrailer();
+  },[])
+
+  // get the officialTrailer as the above api return a lot video
+  const officialTrailer = trailer.find( (video) => video.name === "Official Trailer")
+  const movieId = officialTrailer?.key;
+
+  const trailerOnClickHandler = () => {
+    // here the state of the playTrailer is changed according to its previous state
+    setPlayTrailer( prev => !prev )
+    if(playTrailer){
+      setTrailerButtonText("OVERVIEW")
+    }else{
+      setTrailerButtonText("TRAILER")
+    }
+  }
+
+  const playOnClickHandler = () => {
+    alert('Illegal action, this is Clone Project. Click on trailer button to watch the trailer.')
+  }
+
+  const renderStuff = () => {
+    if(playTrailer){
+      return (
+        <DetailWrapper
+          year={year}
+          mediaType={mediaType}
+          overview={overview}
+        />
+      )
+
+    }else{
+      return (
+        <Trailer
+          movieId={movieId}
+        />
+      )
+    }
+  }
     return (
         <Container>
           <BackgroundImg>
-            <img src="/images/bao-detail.jpg"/>
+            <img src="/images/frozen.jpg" alt="frozen-image"/>
           </BackgroundImg>
 
           <BackgroundTitle>
-            <img src="/images/disney-white-logo.png"/>
+            <p className="movie-name">{name}</p>
           </BackgroundTitle>
 
           <Controls>
 
-            <PlayButton>
-              <img src="/images/play-button.png"/>
+            <PlayButton onClick={playOnClickHandler}>
+              <img src="/images/play-button.png" alt="play-button"/>
               PLAY
             </PlayButton>
 
-            <TrailerButton>
-              <img src="/images/play-button-white.png"/>
-              TRAILER
+            <TrailerButton onClick={trailerOnClickHandler}>
+              <img src="/images/play-button-white.png" alt="trailer-button"/>
+              {trailerButtonText}
             </TrailerButton>
 
             <AddButton>
-              <img src="/images/plus-button-white.png"/>
+              <img src="/images/plus-button-white.png" alt="plus-button-image"/>
             </AddButton>
 
             <WatchInGroupButton>
-              <img src="/images/group-icon.png"/>
+              <img src="/images/group-icon.png" alt="group-button-image"/>
             </WatchInGroupButton>
 
           </Controls>
-          <ShortDetail>
-            <p>
-              this is short detail
-            </p>
-          </ShortDetail>
-          <Description>
-            <p>
-              This is Description about the movie, it will be fetched from the database.
-            </p>
-          </Description>
+
+          <Wrapper>
+            {renderStuff()}
+          </Wrapper>
+
+          <PosterImage>
+            <img src={image}/>
+          </PosterImage>
+
         </Container>
     )
 }
@@ -64,7 +125,7 @@ const BackgroundImg=styled.div`
   left: 0;
   bottom:0;
   right: 0;
-
+  opacity: 0.25;
   img {
     width: 100%;
     height: 100%;
@@ -74,19 +135,24 @@ const BackgroundImg=styled.div`
 
 const BackgroundTitle=styled.div`
   height: 25vh;
-  width: 25vw;
+  width: 55vw;
   min-width: 470px;
   min-height: 200px;
+  display: flex;
+  align-items: center;
+  background-color: ;
 
-  img {
-    width: 90%;
-    height: 100%;
-    object-fit: cover;
+  p {
+    font-family: waltographUI;
+    font-size: 50px;
+    letter-spacing: 1px;
+    line-height: 65px;
   }
 `
 
 const Controls=styled.div`
-  margin-top: 30px;
+  width: 710px;
+  margin-top: 0px;
   display: flex;
   gap: 25px;
 
@@ -148,17 +214,53 @@ const WatchInGroupButton=styled(AddButton)`
   background-color: rgba(0, 0, 0, 0.78);
 `
 
-const ShortDetail=styled.div`
-  margin-top: 25px;
-  p {
-    font-family: Inter;
-    font-size: 15px;
+const PosterImage=styled.div`
+  position: absolute;
+  z-index: 5;
+  width: 490px;
+  height: 740px;
+  top: 85px;
+  right: 250px;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 7px solid rgba(249,249,249,0.1);
+  cursor: pointer;
+  box-shadow: rgb(0 0 0 / 69%) 0px 26px 150px -10px,
+  rgb(0 0 0 / 73%) 0px 16px 50px -10px;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+  opacity: 0.92;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    border-color:  rgba(255, 255, 255, 0.75);
+    box-shadow: rgb(0 0 0 / 69%) 0px 26px 150px -10px,
+    rgb(0 0 0 / 73%) 0px 16px 90px -10px;
+    transform: scale(1.05);
   }
 `
 
-const Description=styled(ShortDetail)`
-  margin-top:20px;
-  line-height: 1.4;
-  font-size: 20px;
-  color: rgba(255, 255, 255, 0.89);
+// const DisneyLogo=styled.div`
+//   position: absolute;
+//   bottom: 20px;
+//   display: flex;
+//   width: 190px;
+//   justify-content: center;
+//   left: 38px;
+//
+//   img {
+//     width: 160px;
+//     height: 90px;
+//     object-fit: cover;
+//     opacity: 0.8;
+//   }
+// `
+
+const Wrapper=styled.div`
+  margin-top: 2px;
+  width: 750px;
+  display: inline-block;
+  height: 480px;
 `
