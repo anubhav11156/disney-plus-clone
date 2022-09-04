@@ -1,15 +1,65 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useLocation } from 'react-router-dom'
+import { auth, provider } from '../firebase'
+import { signInWithPopup, signOut } from 'firebase/auth'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
-  const profileName="Cortana"
-    return (
-        <Nav>
 
-          <Logo>
-            <img src="/images/disney-white-logo.png"/>
-          </Logo>
+  const location = useLocation();
+  const path = location.pathname;
 
+  let flag = (path=="/") ? true : false;
+
+  const [userDetail, setUserDetail] = useState({});
+
+  const navigate = useNavigate();
+
+  const signIn = () => {
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      alert('Logged In  Successfully')
+      setUserDetail(result.user);
+      navigate('/home')
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+
+  }
+
+  const sign_Out = () => {
+    signOut(auth)
+    .then( ()=>{
+      navigate('/')
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+    alert('Logged Out')
+  }
+
+  const email=userDetail.email;
+  const name=userDetail.displayName;
+  const profileImageURL=userDetail.photoURL;
+
+  console.log(email);
+  console.log(name);
+  console.log(profileImageURL);
+
+  const firstName = "Cortana"
+  // const [ firstName, lastName ] = name?.split(' ');
+  // console.log(firstName);
+
+  return (
+      <Nav>
+        <Logo>
+          <img src="/images/disney-white-logo.png"/>
+        </Logo>
+
+        { flag==false &&
+          <>
           <MenuBar>
             <div className="menu">
               <div className="logo-div">
@@ -74,13 +124,23 @@ function Header() {
 
           <Profile>
             <div className="name-div">
-              <p>{profileName}</p>
+              <p>Hi, {firstName}</p>
             </div>
             <div className="img-div">
-              <img src="/images/profile-4.jpg"/>
+              <img onClick={sign_Out} src={profileImageURL} />
             </div>
           </Profile>
-        </Nav>
+          </>
+         }
+
+        { flag==true &&
+          <LoginButton>
+            <button onClick={signIn}>LOGIN</button>
+          </LoginButton>
+        }
+
+
+      </Nav>
     )
 }
 
@@ -103,7 +163,33 @@ const Logo=styled.div`
   img {
     width: 63%;
   }
+`
+const LoginButton=styled.div`
+  flex: 1;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 
+  button {
+    height: 38px;
+    width: 98px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-family: Inter;
+    letter-spacing: 0.4px;
+    font-size: 15px;
+    border: 1px solid white;
+    border-radius: 4px;
+    margin-right: 35px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+
+    &:hover {
+      color: black;
+      background-color: rgba(255, 255, 255, 0.94);
+    }
+  }
 `
 const MenuBar=styled.div`
   flex:1;

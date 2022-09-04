@@ -2,6 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 function Login() {
+
+  const clickHandler = () => {
+    alert('Click on login button')
+  }
     return (
         <Container>
           <BackgroundImg>
@@ -16,7 +20,7 @@ function Login() {
             </Logo>
 
             <SubscribeButton>
-              <button>GET ALL THERE</button>
+              <button onClick={clickHandler}>GET ALL THERE</button>
             </SubscribeButton>
 
             <Description>

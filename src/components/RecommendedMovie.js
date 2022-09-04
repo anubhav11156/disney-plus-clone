@@ -27,7 +27,7 @@ function RecommendedMovie(props) {
   }
 
     return (
-      <Link to={`/detail/${id}`} state={stateToPass}>
+      <Link to={`/home/detail/${id}`} state={stateToPass}>
 
         <Container onMouseOver={mouseOverHandle} onMouseOut={mouseOutHandle}>
           <img src={props.imageURL} />
