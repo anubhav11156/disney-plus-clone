@@ -3,9 +3,19 @@ import styled from 'styled-components'
 import YouTube from 'react-youtube'
 
 function Trailer(props) {
+  const videoOptions = {
+      playerVars: {
+        autoplay: 1,
+        controls: 0,
+        rel: 0,
+        showinfo: 0,
+        mute: 0,
+        loop: 1
+      }
+    };
     return (
         <Container>
-          <YouTube videoId={props.movieId}/>
+          <YouTube videoId={props.movieId} opts={videoOptions}/>
         </Container>
     )
 }

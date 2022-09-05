@@ -7,17 +7,21 @@ import Trailer from './Trailer'
 function Detail() {
 
   const {state} = useLocation();
+  console.log(state);
   const year = state.year;
   const image = state.poster;
   const overview = state.overview;
   const mediaType = state.mediaType;
   const name=state.name;
   const id=state.id;
+  const temp=state?.trailerKey;
 
+  let movieKey;
+
+  // const [trailerKey, setTrailerKey] = useState("");
   const [trailer, setTrailer] = useState([])
   const [playTrailer, setPlayTrailer] = useState(true);
   const [trailerButtonText, setTrailerButtonText] = useState("TRAILER")
-
 
   useEffect(()=>{
     async function fetchTrailer() {
@@ -29,8 +33,18 @@ function Detail() {
   },[])
 
   // get the officialTrailer as the above api return a lot video
-  const officialTrailer = trailer.find( (video) => video.name === "Official Trailer")
-  const movieId = officialTrailer?.key;
+  const officialTrailer = trailer?.find( (video) => video.name === "Official Trailer")
+  movieKey = officialTrailer?.key;
+  // setTrailerKey(officialTrailer?.key);
+
+  if(
+    (id=='1')||
+    (id=='2')||
+    (id=='3')||
+    (id=='4')
+  ) {
+    movieKey=temp;
+  }
 
   const trailerOnClickHandler = () => {
     // here the state of the playTrailer is changed according to its previous state
@@ -59,7 +73,7 @@ function Detail() {
     }else{
       return (
         <Trailer
-          movieId={movieId}
+          movieId={movieKey}
         />
       )
     }

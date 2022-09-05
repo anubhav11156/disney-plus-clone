@@ -3,9 +3,13 @@ import styled from 'styled-components'
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {movieData} from '../sliderData'
+import SliderCard from './SliderCard'
 
 function ImgSlider() {
 
+
+  // this is setting for the carousel (react-slick)
   let settings = {
     dots: true,
     infinite: true,
@@ -14,14 +18,24 @@ function ImgSlider() {
     slidesToScroll: 1,
     autoplay: true
   }
+
+  const sliders = movieData.map((slider)=>{
+    return (
+      <SliderCard
+        id={slider.id}
+        trailerKey={slider.key}
+        bgImg={slider.bgImg}
+        poster={slider.poster}
+        overview={slider.overview}
+        year={slider.year}
+        name={slider.name}
+        mediaType={slider.mediaType}
+      />
+    )
+  })
     return (
         <Carousel {...settings}>
-          <Wrap>
-            <img src="/images/slider-badag.jpg"/>
-          </Wrap>
-          <Wrap>
-            <img src="/images/slider-badging.jpg"/>
-          </Wrap>
+          {sliders}
         </Carousel>
     )
 }
@@ -31,7 +45,7 @@ export default ImgSlider
 const Carousel=styled(Slider)`
   margin-top: 20px;
   height:368px;
-  width: 95vw;
+  width:95vw;
 
   ul li button {
     &:before {
@@ -50,22 +64,5 @@ const Carousel=styled(Slider)`
 
   button {
     z-index: 1;
-  }
-`
-const Wrap = styled.div`
-  cursor: pointer;
-  height: 368px;
-  img {
-    border: 4px solid transparent;
-    width: 100%;
-    height: 100%;
-    border-radius: 7px;
-    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
-    rgb(0 0 0 / 73%) 0px 16px 10px -10px;
-    transition: border 0.27s;
-  }
-
-  img:hover {
-    border: 4px solid rgba(255, 255, 255, 0.7);
   }
 `

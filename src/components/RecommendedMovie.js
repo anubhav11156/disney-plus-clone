@@ -23,7 +23,8 @@ function RecommendedMovie(props) {
     mediaType:mediaType,
     poster:image,
     name:name,
-    id:id
+    id:id,
+    key:""
   }
 
     return (
