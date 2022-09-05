@@ -52,6 +52,9 @@ function Header() {
   const name=userDetail.displayName;
   const profileImageURL=userDetail.photoURL;
 
+  const [isActive, setIsActive] = useState(false);
+  const onFocusHandle = ()=> setIsActive(true)
+  const onBlurHandle = ()=>  setIsActive(false)
   return (
       <Nav>
         <Logo>
@@ -65,12 +68,12 @@ function Header() {
               <div className="logo-div">
                 <img src="/images/home-icon.svg" />
               </div>
-              <div className="option-div">
+              <div className="option-div" onClick={()=>navigate('/home')}>
                 HOME
                 <div className="bar"></div>
               </div>
             </div>
-            <div className="menu">
+            {/*<div className="menu">
               <div className="logo-div">
                 <img src="/images/search-icon.svg" />
               </div>
@@ -78,7 +81,7 @@ function Header() {
                 SEARCH
                 <div className="bar"></div>
               </div>
-            </div>
+            </div> */}
 
             <div className="menu">
               <div className="logo-div">
@@ -121,6 +124,14 @@ function Header() {
             </div>
 
           </MenuBar>
+
+          <SearchBar>
+            <input type="text" placeholder="Search" onFocus={onFocusHandle} onBlur={onBlurHandle}
+              style={{
+                width: isActive ? '300px' : '190px',
+                borderBottom: isActive ? '1px solid rgb(43, 118, 207)' : '1px solid rgb(255, 255, 255, 0.5)'
+              }} />
+          </SearchBar>
 
           <Profile>
             <div className="name-div">
@@ -191,8 +202,9 @@ const LoginButton=styled.div`
   }
 `
 const MenuBar=styled.div`
-  flex:1;
+  width: 570px;
   height: 70px;
+  gap: 20px;
   background-color: rgb(9,11,19);
   display: flex;
   align-items: center;
@@ -200,6 +212,7 @@ const MenuBar=styled.div`
   .menu {
     flex:1;
     height: 70px;
+    opacity: 0.9;
 
     display: flex;
     align-items: center;
@@ -261,6 +274,7 @@ const Profile=styled.div`
     justify-content: end;
 
     p {
+      opacity: 0.9;
       margin-right: 8px;
       color: white;
       font-family: Inter;
@@ -285,5 +299,27 @@ const Profile=styled.div`
       border-radius: 21px;
       cursor: pointer;
     }
+  }
+`
+
+const SearchBar=styled.div`
+  flex:1;
+  margin-left: 20px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  input {
+    width: 207px;
+    height: 28px;
+    background-color: rgb(9,11,19);
+    border: none;
+    font-family: Inter;
+    font-size: 16px;
+    outline: none;
+    color: rgba(255, 255, 255, 0.5);
+    background: url('/images/search-grey.svg') no-repeat right;
+    background-size: 17.5px;
+    transition: all 0.25s;
   }
 `
