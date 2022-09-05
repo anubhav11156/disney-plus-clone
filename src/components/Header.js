@@ -138,8 +138,6 @@ function Header() {
             <button onClick={signIn}>LOGIN</button>
           </LoginButton>
         }
-
-
       </Nav>
     )
 }
@@ -152,6 +150,7 @@ const Nav=styled.div`
   display: flex;
   align-items: center;
   overflow-x:hidden;
+  position: relative;
 `
 const Logo=styled.div`
   width: 140px;
@@ -279,6 +278,7 @@ const Profile=styled.div`
     justify-content: center;
     align-items:center;
     background-color: rgb(9,11,19);
+    position: relative;
     img {
       width: 42px;
       height: 42px;

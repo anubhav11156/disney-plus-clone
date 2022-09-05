@@ -68,7 +68,6 @@ const Container=styled.div`
   margin-top: 55px;
   flex:1;
   width: 95vw;
-
   h4 {
     padding-top: 15px;
     padding-bottom: 30px;

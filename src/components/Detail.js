@@ -7,7 +7,6 @@ import Trailer from './Trailer'
 function Detail() {
 
   const {state} = useLocation();
-  console.log(state);
   const year = state.year;
   const image = state.poster;
   const overview = state.overview;
