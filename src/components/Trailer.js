@@ -6,7 +6,7 @@ function Trailer(props) {
   const videoOptions = {
       playerVars: {
         autoplay: 1,
-        controls: 0,
+        controls: 1,
         rel: 0,
         showinfo: 0,
         mute: 0,

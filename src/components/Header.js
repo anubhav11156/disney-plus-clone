@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 import { auth, provider } from '../firebase'
-import { signInWithPopup, signOut } from 'firebase/auth'
+import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 
 function Header() {
@@ -16,6 +16,15 @@ function Header() {
 
   const navigate = useNavigate();
 
+  // This is for: When user refresh the page the it should not logout
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user)=> {
+      if(user){
+        setUserDetail(user);
+      }
+    })
+  },[])
+
   const signIn = () => {
     signInWithPopup(auth, provider)
     .then((result) => {
@@ -26,7 +35,6 @@ function Header() {
     .catch((err)=>{
       console.log(err);
     })
-
   }
 
   const sign_Out = () => {
@@ -43,14 +51,6 @@ function Header() {
   const email=userDetail.email;
   const name=userDetail.displayName;
   const profileImageURL=userDetail.photoURL;
-
-  console.log(email);
-  console.log(name);
-  console.log(profileImageURL);
-
-  const firstName = "Cortana"
-  // const [ firstName, lastName ] = name?.split(' ');
-  // console.log(firstName);
 
   return (
       <Nav>
@@ -124,7 +124,7 @@ function Header() {
 
           <Profile>
             <div className="name-div">
-              <p>Hi, {firstName}</p>
+              <p>Hi, {name}</p>
             </div>
             <div className="img-div">
               <img onClick={sign_Out} src={profileImageURL} />
@@ -265,7 +265,8 @@ const Profile=styled.div`
       margin-right: 8px;
       color: white;
       font-family: Inter;
-      font-size:14px;
+      font-size:16px;
+      font-weight: 500;
       cursor: pointer;
     }
 
