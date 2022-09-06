@@ -73,16 +73,7 @@ function Header() {
                 <div className="bar"></div>
               </div>
             </div>
-            {/*<div className="menu">
-              <div className="logo-div">
-                <img src="/images/search-icon.svg" />
-              </div>
-              <div className="option-div">
-                SEARCH
-                <div className="bar"></div>
-              </div>
-            </div> */}
-
+    
             <div className="menu">
               <div className="logo-div">
                 <img src="/images/watchlist-icon.svg" />
@@ -162,6 +153,7 @@ const Nav=styled.div`
   align-items: center;
   overflow-x:hidden;
   position: relative;
+  z-index: 10;
 `
 const Logo=styled.div`
   width: 140px;
@@ -256,8 +248,6 @@ const MenuBar=styled.div`
       margin-right: 7px;
       padding-bottom: 2px;
     }
-
-
   }
 `
 
